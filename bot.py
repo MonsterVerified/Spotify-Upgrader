@@ -72,7 +72,7 @@ async def redeem(ctx, arg1, arg2):
 
         f.close()
     if country not in allowed_countries:
-        return await (client.say('Sorry But the Country you Specified is Not Currently Offered'))
+        return await (client.say('Sorry, but the selected country is not offered right now.'))
     else:
         check = re.compile('(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$)')
         mat = check.match(str(arg2))
@@ -80,7 +80,7 @@ async def redeem(ctx, arg1, arg2):
             result = None
             while result != ',"success":true}':
                 if len(accounts) == 0:
-                    await client.say('Sorry We Are Out of Stock on That Country')
+                    await client.say('Sorry, but the selected country got no stock left, please retry when stock is available.')
                     os.remove('Accounts/' + str(country) + '.txt')
                     f = open('Accounts/' + str(country) + '.txt', 'a')
                     for ELEM in accounts:
@@ -119,21 +119,21 @@ async def redeem(ctx, arg1, arg2):
                                 break
                             if 'message":"Invite limit reached' in invite.text:
                                 result = None
-                                return await(client.say('Invite limit reached. Please try again'))
+                                return await(client.say('The current account used have reached the maximum invited members, please retry again.'))
                                 accounts.pop()
-                            if 'message":"No family plan found for user' in invite.text:
+                            if 'message":"The account used for upgrading got no plan. Please retry again.' in invite.text:
                                 result = None
-                                return await(client.say('No plan found please try again'))
+                                return await(client.say('No plan found. P   lease retry again.'))
                                 accounts.pop()
                         if '{"error":"errorInvalidCredentials"}' in login.text:
                             result = None
-                            return await(client.say('Invalid account was used from the DB please try again'))
+                            return await(client.say('An invalid account was used to upgarade, please try again.'))
                             accounts.pop()
                 except:
                     pass
 
         if not mat:
-            return await (client.say('Sorry But an Invalid Email Was Given'))
+            return await (client.say('Sorry, but we could not invite you, due to your e-mail being wrong/not registered on Spotify. '))
 
 
 @client.command()
