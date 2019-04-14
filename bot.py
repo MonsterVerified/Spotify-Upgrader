@@ -8,6 +8,7 @@ with open('config.json') as (f):
     data = json.load(f)
 TOKEN = data['token']
 BOT_PREFIX = data['prefix']
+STATUS = data ['botstatus']
 client = Bot(command_prefix=BOT_PREFIX)
 
 def grab_accounts(US, GB, DE, CA, CH, FR, SE):
@@ -72,7 +73,7 @@ async def redeem(ctx, arg1, arg2):
 
         f.close()
     if country not in allowed_countries:
-        return await (client.say('Sorry, but the selected country is not offered right now.'))
+        return await (ctx.send('Sorry, but the selected country is not offered right now.'))
     else:
         check = re.compile('(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$)')
         mat = check.match(str(arg2))
@@ -80,7 +81,7 @@ async def redeem(ctx, arg1, arg2):
             result = None
             while result != ',"success":true}':
                 if len(accounts) == 0:
-                    await client.say('Sorry, but the selected country got no stock left, please retry when stock is available.')
+                    await ctx.send('Sorry, but the selected country got no stock left, please retry when stock is available.')
                     os.remove('Accounts/' + str(country) + '.txt')
                     f = open('Accounts/' + str(country) + '.txt', 'a')
                     for ELEM in accounts:
@@ -114,30 +115,30 @@ async def redeem(ctx, arg1, arg2):
                             invite = c.post(url, headers=headers, json=login_data)
                             print(invite.text)
                             if '"success":true}' in invite.text:
-                                await client.say('Success, check your email')
+                                await ctx.send('Success, check your email')
                                 f.close()
                                 break
                             if 'message":"Invite limit reached' in invite.text:
                                 result = None
-                                return await(client.say('The current account used have reached the maximum invited members, please retry again.'))
+                                return await(ctx.send('The current account used have reached the maximum invited members, please retry again.'))
                                 accounts.pop()
                             if 'message":"The account used for upgrading got no plan. Please retry again.' in invite.text:
                                 result = None
-                                return await(client.say('No plan found. P   lease retry again.'))
+                                return await(ctx.send('No plan found. P   lease retry again.'))
                                 accounts.pop()
                         if '{"error":"errorInvalidCredentials"}' in login.text:
                             result = None
-                            return await(client.say('An invalid account was used to upgarade, please try again.'))
+                            return await(ctx.send('An invalid account was used to upgarade, please try again.'))
                             accounts.pop()
                 except:
                     pass
 
         if not mat:
-            return await (client.say('Sorry, but we could not invite you, due to your e-mail being wrong/not registered on Spotify. '))
+            return await (ctx.send('Sorry, but we could not invite you, due to your e-mail being wrong/not registered on Spotify. '))
 
 
 @client.command()
-async def stock():
+async def stock(ctx):
     US_stock = []
     GB_stock = []
     DE_stock = []
@@ -156,7 +157,7 @@ async def stock():
     embed.add_field(name='CH', value=len(CH_stock), inline=True)
     embed.add_field(name='FR', value=len(FR_stock), inline=True)
     embed.add_field(name='SE', value=len(SE_stock), inline=True)
-    await client.say(embed=embed)
+    await ctx.send(embed=embed)
 
 
 
