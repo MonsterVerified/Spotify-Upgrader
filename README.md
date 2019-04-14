@@ -1,5 +1,5 @@
 # Spotify Discord Based Upgrader, recoded by MonsterVerified.
-Interested in getting automated family plan invites to your Spotify account?, then, check this project out! Made by Wadu, but forked from sleepxd project (yes, sleepxd sused @WaduOfficial source code) and recoded by MonsterVerified.
+Interested in getting automated family plan invites to your Spotify account?, then, check this project out! Made by Wadu, but forked from sleepxd project (yes, sleepxd used @WaduOfficial source code) and recoded by MonsterVerified.
 # How to install?
 Install Python 3.6.6 version and run the "bot.py" file, make sure to modify the "config.json" file before running the Spotify Upgrader Bot. This is an important step, without it, your bot won't work.
 # How do I create my bot profile and get the token?
