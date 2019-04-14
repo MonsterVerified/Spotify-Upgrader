@@ -8,3 +8,5 @@ Go to https://discordapp.com/developers/applications/ and click New Application,
 Currently, none, but feel free to DM me on Discord: Sasuke#7832.
 # Wanna contribute in this project?
 Open pull requests, so you help me recode to the bot.
+# Credits
+Credits to @WaduOfficial for making his code open source, and letting me use his web-requests so the bot works.
